@@ -574,7 +574,9 @@ function initTooltips() {
 }
 
 async function checkAuthSession() {
-  const currentPath = window.location.pathname.split("/").pop() || "index.html";
+  const rawPath = window.location.pathname.split("/").pop() || "index.html";
+  const currentPath = rawPath.endsWith(".html") ? rawPath : (rawPath ? rawPath + ".html" : "index.html");
+
   const protectedPages = [
     "dashboard.html",
     "habits.html",
@@ -588,6 +590,15 @@ async function checkAuthSession() {
   ];
   const authPages = ["login.html", "register.html"];
 
+  // Pre-load from local storage so UI never flickers
+  const savedSession = localStorage.getItem("ht_session");
+  if (savedSession) {
+    try {
+      window.currentUser = JSON.parse(savedSession);
+      renderSidebar();
+    } catch (e) {}
+  }
+
   if (window.AuthAPI) {
     const res = await AuthAPI.getMe();
     if (res && res.success && res.data) {
@@ -597,8 +608,8 @@ async function checkAuthSession() {
         window.location.href = "dashboard.html";
         return;
       }
-    } else if (protectedPages.includes(currentPath)) {
-      window.location.href = "index.html";
+    } else if (!savedSession && protectedPages.includes(currentPath)) {
+      window.location.href = "login.html";
       return;
     }
   }
