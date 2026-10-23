@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create Account — Habit Habit Tracker</title>
+    <meta name="description" content="Create your Habit account to plan your syllabus, track habits and build study streaks." />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body>
+    <main class="auth-page">
+      <section class="auth-card">
+        <a class="auth-brand" href="index.html">
+          <img src="images/logo.png" alt="Habit Logo" class="auth-logo-img" style="width: 50px; height: 50px; object-fit: contain;" />
+          <span class="brand-text">Habit</span>
+        </a>
+        <h1>Create Account</h1>
+        <p class="auth-lead">Start planning your syllabus and building daily habits.</p>
+
+        <form id="registerForm" novalidate>
+          <div class="auth-field">
+            <label class="form-label" for="registerName">Full name</label>
+            <input class="form-control" type="text" id="registerName" name="name" autocomplete="name" placeholder="Ananya Sharma" />
+            <p class="field-error" id="registerNameError" role="alert"></p>
+          </div>
+
+          <div class="auth-field">
+            <label class="form-label" for="registerEmail">Email address</label>
+            <input class="form-control" type="email" id="registerEmail" name="email" autocomplete="email" placeholder="you@college.edu" />
+            <p class="field-error" id="registerEmailError" role="alert"></p>
+          </div>
+
+          <div class="auth-field">
+            <label class="form-label" for="registerPhone">Phone number</label>
+            <input class="form-control" type="tel" id="registerPhone" name="phone" autocomplete="tel" placeholder="10-digit mobile number (e.g. 9876543210)" maxlength="10" />
+            <p class="field-error" id="registerPhoneError" role="alert"></p>
+          </div>
+
+          <div class="auth-field">
+            <label class="form-label" for="registerPassword">Password</label>
+            <div class="password-wrap">
+              <input class="form-control" type="password" id="registerPassword" name="password" autocomplete="new-password" placeholder="Minimum 6 characters" />
+              <button class="toggle-password" type="button" data-target="registerPassword" aria-label="Show password">
+                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+            <p class="field-error" id="registerPasswordError" role="alert"></p>
+          </div>
+
+          <div class="auth-field">
+            <label class="form-label" for="registerConfirm">Confirm password</label>
+            <div class="password-wrap">
+              <input class="form-control" type="password" id="registerConfirm" name="confirmPassword" autocomplete="new-password" placeholder="Re-enter password" />
+              <button class="toggle-password" type="button" data-target="registerConfirm" aria-label="Show password">
+                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+            <p class="field-error" id="registerConfirmError" role="alert"></p>
+          </div>
+
+          <div class="auth-field">
+            <label class="form-label" for="registerOtp">Verify Phone OTP (Optional)</label>
+            <div class="input-with-btn">
+              <input class="form-control" type="text" id="registerOtp" name="otp" placeholder="Enter 6-digit OTP" maxlength="6" />
+              <button class="btn btn-outline-gold btn-send-otp" type="button" id="sendRegisterOtpBtn">
+                Send OTP
+              </button>
+            </div>
+            <p class="field-error" id="registerOtpError" role="alert"></p>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="registerTerms" />
+            <label class="form-check-label" for="registerTerms">I agree to the terms of use and privacy policy.</label>
+            <p class="field-error" id="registerTermsError" role="alert">Please accept the terms to continue.</p>
+          </div>
+
+          <button class="btn btn-gold w-100" type="submit">Register</button>
+        </form>
+
+        <p class="auth-footer">Already have an account? <a href="login.html">Login</a></p>
+        <a class="auth-back" href="index.html"><i class="fa-solid fa-arrow-left me-1" aria-hidden="true"></i>Back to home</a>
+      </section>
+    </main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/theme.js"></script>
+        <script src="js/api/api.js"></script>
+        <script src="js/api/authApi.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/auth.js"></script>
+  </body>
+</html>

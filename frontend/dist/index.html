@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Habit — Habit Tracker &amp; Study Planner for Students</title>
+    <meta
+      name="description"
+      content="Habit combines daily habit tracking, syllabus-based study planning, streaks, analytics and reflection in one clean student dashboard."
+    />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" crossorigin href="/assets/responsive-F3WVIKQX.css">
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg public-navbar sticky-top">
+        <div class="container">
+          <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+            <img src="/assets/logo-CWcV2Swj.png" alt="Habit Logo" class="brand-logo-img" style="width: 38px; height: 38px; object-fit: contain;" />
+            <span class="brand-text">Habit</span>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#publicNav"
+            aria-controls="publicNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="publicNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+              <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+              <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+              <li class="nav-item"><a class="nav-link" href="#benefits">Benefits</a></li>
+              <li class="nav-item">
+                <button class="btn btn-ghost" type="button" id="themeToggle" aria-label="Toggle colour theme">
+                  <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                  <span id="themeToggleLabel" class="visually-hidden">Dark Mode</span>
+                </button>
+              </li>
+              <li class="nav-item"><a class="btn btn-outline-gold" href="login.html">Login</a></li>
+              <li class="nav-item"><a class="btn btn-gold" href="register.html">Register</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+              <span class="eyebrow"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>Built for students</span>
+              <h1>Build Better Habits. Study Smarter. Stay Consistent.</h1>
+              <p class="lead">
+                Habit turns your syllabus into daily study tasks and pairs them with the
+                habits that keep you consistent — one dashboard for what you must study today,
+                what you must practise daily, and how far you have come.
+              </p>
+              <div class="d-flex flex-wrap gap-2 mt-4 stack-mobile">
+                <a class="btn btn-gold" href="register.html">Get Started</a>
+                <a class="btn btn-outline-gold" href="login.html">Login</a>
+              </div>
+              <div class="metric-strip">
+                <div><strong>5</strong>Subjects planned</div>
+                <div><strong>6</strong>Daily habits</div>
+                <div><strong>21d</strong>Best streak</div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="hero-preview" aria-hidden="true">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <strong class="font-heading">Today's Study Plan</strong>
+                  <span class="pill pill-gold">3 of 5 done</span>
+                </div>
+                <div class="preview-bar mb-4"><span style="width: 60%"></span></div>
+                <div class="preview-entry">
+                  <strong style="font-size: 0.9rem">Database Management Systems</strong>
+                  <p class="mb-0 text-muted-soft" style="font-size: 0.82rem">
+                    Normalization &amp; Functional Dependencies · 45 min
+                  </p>
+                </div>
+                <div class="preview-entry">
+                  <strong style="font-size: 0.9rem">Operating Systems</strong>
+                  <p class="mb-0 text-muted-soft" style="font-size: 0.82rem">
+                    Deadlock Detection · 40 min
+                  </p>
+                </div>
+                <div class="preview-entry">
+                  <strong style="font-size: 0.9rem">Today's Habits</strong>
+                  <p class="mb-0 text-muted-soft" style="font-size: 0.82rem">
+                    4 / 6 completed · 75% productivity
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="py-5 bg-section">
+        <div class="container">
+          <h2 class="section-title mb-1" style="font-size: 1.6rem">Everything in one place</h2>
+          <p class="section-subtitle mb-4">
+            A focused set of tools that a final-year student actually uses every day.
+          </p>
+          <div class="row g-4">
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card-panel">
+                <span class="feature-icon"><i class="fa-solid fa-list-check" aria-hidden="true"></i></span>
+                <h3 class="section-title">Habit Tracking</h3>
+                <p class="section-subtitle">Daily and weekly habits with streaks and reminders.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card-panel">
+                <span class="feature-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span>
+                <h3 class="section-title">Study Planner</h3>
+                <p class="section-subtitle">Turn your syllabus and exam date into a day-by-day plan.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card-panel">
+                <span class="feature-icon"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i></span>
+                <h3 class="section-title">Daily Tasks</h3>
+                <p class="section-subtitle">Clear topic-level tasks with duration and priority.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card-panel">
+                <span class="feature-icon"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></span>
+                <h3 class="section-title">Progress Analytics</h3>
+                <p class="section-subtitle">Daily, weekly and monthly completion trends.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card-panel">
+                <span class="feature-icon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span>
+                <h3 class="section-title">Calendar &amp; Reminders</h3>
+                <p class="section-subtitle">See study tasks, habits and reminders on one calendar.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card-panel">
+                <span class="feature-icon"><i class="fa-solid fa-feather" aria-hidden="true"></i></span>
+                <h3 class="section-title">Journal &amp; Rewards</h3>
+                <p class="section-subtitle">Reflect daily, earn badges and keep the streak alive.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" class="py-5">
+        <div class="container">
+          <h2 class="section-title mb-1" style="font-size: 1.6rem">How it works</h2>
+          <p class="section-subtitle mb-4">Five steps from syllabus to consistent progress.</p>
+          <div class="row g-4">
+            <div class="col-12 col-md-6 col-xl">
+              <div class="card-panel">
+                <span class="step-number">1</span>
+                <h3 class="section-title">Create Account</h3>
+                <p class="section-subtitle">Register with your college email in seconds.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl">
+              <div class="card-panel">
+                <span class="step-number">2</span>
+                <h3 class="section-title">Set Goals &amp; Syllabus</h3>
+                <p class="section-subtitle">Add subjects, upload syllabus and set the exam date.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl">
+              <div class="card-panel">
+                <span class="step-number">3</span>
+                <h3 class="section-title">Generate Daily Plan</h3>
+                <p class="section-subtitle">Topics are distributed across your available hours.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl">
+              <div class="card-panel">
+                <span class="step-number">4</span>
+                <h3 class="section-title">Complete Tasks</h3>
+                <p class="section-subtitle">Tick off study tasks and habits as the day goes.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl">
+              <div class="card-panel">
+                <span class="step-number">5</span>
+                <h3 class="section-title">Track Progress</h3>
+                <p class="section-subtitle">Watch streaks, analytics and badges build up.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="benefits" class="py-5 bg-section">
+        <div class="container">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-6">
+              <h2 class="section-title mb-3" style="font-size: 1.6rem">Why students stay with it</h2>
+              <ul class="list-unstyled d-grid gap-3 mb-0">
+                <li><i class="fa-solid fa-circle-check text-gold me-2" aria-hidden="true"></i>Today's work is always the first thing you see.</li>
+                <li><i class="fa-solid fa-circle-check text-gold me-2" aria-hidden="true"></i>Study and habits share a single productivity score.</li>
+                <li><i class="fa-solid fa-circle-check text-gold me-2" aria-hidden="true"></i>Streaks and badges make consistency measurable.</li>
+                <li><i class="fa-solid fa-circle-check text-gold me-2" aria-hidden="true"></i>Dark and light themes for late-night study sessions.</li>
+              </ul>
+            </div>
+            <div class="col-lg-6">
+              <div class="card-panel">
+                <h3 class="section-title mb-3">Today at a glance</h3>
+                <div class="progress-line"><span>Study completion</span><span>60%</span></div>
+                <div class="progress mb-3" role="progressbar" aria-label="Study completion" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar" style="width: 60%"></div>
+                </div>
+                <div class="progress-line"><span>Habit completion</span><span>67%</span></div>
+                <div class="progress" role="progressbar" aria-label="Habit completion" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar" style="width: 67%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5">
+        <div class="container">
+          <div class="cta-band">
+            <h2 class="section-title mb-2" style="font-size: 1.5rem">Start your streak today</h2>
+            <p class="section-subtitle mb-4">Create a free account and build your first daily plan in minutes.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-2 stack-mobile">
+              <a class="btn btn-gold" href="register.html">Create Account</a>
+              <a class="btn btn-outline-gold" href="dashboard.html">View Dashboard Demo</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container d-flex flex-wrap justify-content-between gap-2">
+        <span>© 2026 Habit · Final Year B.Tech Project</span>
+        <span>Built with HTML, CSS, Bootstrap 5 and vanilla JavaScript</span>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/api/api.js"></script>
+    <script src="js/api/authApi.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

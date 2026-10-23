@@ -1,0 +1,353 @@
+/* ==========================================================
+   dashboard.css — welcome, study plan, habits, productivity,
+   stats, calendar/reminders, journal & reward previews
+   ========================================================== */
+
+.welcome-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  flex-wrap: wrap;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 22px 24px;
+  margin-bottom: 30px;
+}
+
+.welcome-panel h1 {
+  font-size: 1.5rem;
+  margin: 0 0 4px;
+}
+
+.welcome-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.welcome-quote {
+  margin: 8px 0 0;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  max-width: 520px;
+}
+
+/* ---------- Task & habit lists ---------- */
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 13px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  transition: all 0.22s ease;
+}
+
+.item-row:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: var(--card-hover);
+}
+
+.item-row.completed {
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+.item-row.completed .item-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.item-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.item-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.item-sub {
+  margin: 1px 0 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.item-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.progress-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+/* ---------- Productivity ---------- */
+.productivity-grid {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.ring {
+  --value: 0;
+  width: 148px;
+  height: 148px;
+  flex: 0 0 148px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: conic-gradient(
+    var(--gold) calc(var(--value) * 1%),
+    var(--bg-section) 0
+  );
+  transition: background 0.4s ease;
+}
+
+.ring-inner {
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.ring-inner strong {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.7rem;
+  display: block;
+  line-height: 1;
+}
+
+.ring-inner small {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.productivity-breakdown {
+  flex: 1 1 260px;
+  min-width: 220px;
+}
+
+.breakdown-row {
+  margin-bottom: 14px;
+}
+
+.breakdown-row:last-child {
+  margin-bottom: 0;
+}
+
+.breakdown-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+}
+
+/* ---------- Stats ---------- */
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  height: 100%;
+  transition: all 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 175, 55, 0.42);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(212, 175, 55, 0.14);
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  margin-bottom: 12px;
+}
+
+.stat-value {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Mini calendar ---------- */
+.mini-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.mini-day {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  font-size: 0.78rem;
+  background: var(--bg-secondary);
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+}
+
+.mini-day.head {
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.mini-day.done {
+  background: rgba(34, 197, 94, 0.16);
+  color: var(--success);
+}
+
+.mini-day.missed {
+  background: rgba(239, 68, 68, 0.14);
+  color: var(--danger);
+}
+
+.mini-day.today {
+  border-color: var(--gold);
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 14px;
+}
+
+.legend span::before {
+  content: "";
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  margin-right: 6px;
+  background: var(--gold);
+}
+
+.legend .done::before {
+  background: var(--success);
+}
+
+.legend .missed::before {
+  background: var(--danger);
+}
+
+/* ---------- Reminders ---------- */
+.reminder-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.reminder-row:last-child {
+  border-bottom: 0;
+}
+
+.reminder-time {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.82rem;
+  color: var(--gold);
+  flex: 0 0 78px;
+}
+
+.reminder-title {
+  flex: 1 1 auto;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+/* ---------- Previews ---------- */
+.preview-entry {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.preview-entry:last-child {
+  border-bottom: 0;
+}
+
+.badge-tile {
+  text-align: center;
+  padding: 16px 10px;
+  border-radius: 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  height: 100%;
+}
+
+.badge-tile i {
+  font-size: 1.35rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.badge-tile.locked {
+  opacity: 0.5;
+}
+
+.badge-tile.locked i {
+  color: var(--text-muted);
+}
+
+.badge-tile strong {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.badge-tile small {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}

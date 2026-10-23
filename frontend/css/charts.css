@@ -1,0 +1,74 @@
+/* ==========================================================
+   charts.css — chart cards, canvases, legends
+   ========================================================== */
+
+.chart-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  height: 100%;
+  transition: all 0.25s ease;
+}
+
+.chart-card:hover {
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: var(--shadow-md);
+}
+
+.chart-holder {
+  position: relative;
+  width: 100%;
+  height: 280px;
+}
+
+.chart-holder.short {
+  height: 220px;
+}
+
+.chart-holder canvas {
+  max-width: 100%;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 14px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.chart-legend .key {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.chart-legend .swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.chart-legend .swatch.alt {
+  background: #6b7280;
+}
+
+.metric-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.metric-strip strong {
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.15rem;
+  color: var(--text-primary);
+}

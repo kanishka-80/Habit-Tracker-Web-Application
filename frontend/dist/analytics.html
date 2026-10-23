@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Analytics — Habit</title>
+    <meta name="description" content="Daily, weekly and monthly progress analytics for study tasks, habits and subjects." />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" crossorigin href="/assets/responsive-F3WVIKQX.css">
+    <link rel="stylesheet" crossorigin href="/assets/dashboard-D-fEbhqD.css">
+    <link rel="stylesheet" crossorigin href="/assets/charts-BR1fK9rd.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="app-sidebar" id="appSidebar" aria-label="Main navigation"></aside>
+      <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+      <div class="app-main">
+        <div class="mobile-bar">
+          <button class="btn btn-outline-gold btn-sm" type="button" id="sidebarTrigger" aria-label="Open menu">
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+          </button>
+          <strong class="font-heading">Analytics</strong>
+          <img src="/assets/logo-CWcV2Swj.png" alt="Habit Logo" class="brand-logo-img" style="width: 36px; height: 36px; object-fit: contain;" />
+        </div>
+
+        <div class="page-wrap">
+          <header class="welcome-panel fade-up">
+            <div>
+              <h1>Analytics</h1>
+              <p class="welcome-quote mb-0">How consistent you have been across study tasks and habits.</p>
+            </div>
+          </header>
+
+          <section class="row g-3 section-gap">
+            <div class="col-6 col-xl-3">
+              <div class="stat-card"><span class="stat-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
+                <div class="stat-value" id="summaryToday">0%</div><div class="stat-label">Today's Productivity</div></div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div class="stat-card"><span class="stat-icon"><i class="fa-solid fa-chart-column" aria-hidden="true"></i></span>
+                <div class="stat-value" id="summaryWeekly">0%</div><div class="stat-label">Weekly Average</div></div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div class="stat-card"><span class="stat-icon"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></span>
+                <div class="stat-value" id="summaryMonthly">0%</div><div class="stat-label">Monthly Consistency</div></div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div class="stat-card"><span class="stat-icon"><i class="fa-solid fa-fire" aria-hidden="true"></i></span>
+                <div class="stat-value" id="summaryStreak">0 days</div><div class="stat-label">Current Streak</div></div>
+            </div>
+          </section>
+
+          <section class="row g-4 section-gap">
+            <div class="col-12 col-xl-6">
+              <div class="chart-card">
+                <h2 class="section-title mb-1">Daily Progress</h2>
+                <p class="section-subtitle mb-3">Completion build-up across today.</p>
+                <div class="chart-holder short"><canvas id="dailyChart" role="img" aria-label="Daily progress chart"></canvas></div>
+              </div>
+            </div>
+            <div class="col-12 col-xl-6">
+              <div class="chart-card">
+                <h2 class="section-title mb-1">Weekly Progress</h2>
+                <p class="section-subtitle mb-3">Study versus habit completion for each day.</p>
+                <div class="chart-holder short"><canvas id="weeklyProgressChart" role="img" aria-label="Weekly progress chart"></canvas></div>
+              </div>
+            </div>
+            <div class="col-12 col-xl-6">
+              <div class="chart-card">
+                <h2 class="section-title mb-1">Monthly Progress</h2>
+                <p class="section-subtitle mb-3">Consistency trend week by week.</p>
+                <div class="chart-holder short"><canvas id="monthlyProgressChart" role="img" aria-label="Monthly progress chart"></canvas></div>
+              </div>
+            </div>
+            <div class="col-12 col-xl-6">
+              <div class="chart-card">
+                <h2 class="section-title mb-1">Study vs Habit Completion</h2>
+                <p class="section-subtitle mb-3">Where your completed work came from.</p>
+                <div class="chart-holder short"><canvas id="splitChart" role="img" aria-label="Study versus habit chart"></canvas></div>
+              </div>
+            </div>
+            <div class="col-12 col-xl-6">
+              <div class="chart-card">
+                <h2 class="section-title mb-1">Subject Progress</h2>
+                <p class="section-subtitle mb-3">Completion for every planned subject.</p>
+                <div class="chart-holder short"><canvas id="subjectChart" role="img" aria-label="Subject progress chart"></canvas></div>
+              </div>
+            </div>
+            <div class="col-12 col-xl-6">
+              <div class="chart-card">
+                <h2 class="section-title mb-1">Habit Category Performance</h2>
+                <p class="section-subtitle mb-3">Which habit categories you keep up with.</p>
+                <div class="chart-holder short"><canvas id="categoryChart" role="img" aria-label="Habit category chart"></canvas></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/api/api.js"></script>
+    <script src="js/api/authApi.js"></script>
+    <script src="js/api/analyticsApi.js"></script>
+    <script src="js/api/habitApi.js"></script>
+    <script src="js/api/studyApi.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/analytics.js"></script>
+  </body>
+</html>

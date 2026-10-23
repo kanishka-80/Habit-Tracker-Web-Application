@@ -1,0 +1,109 @@
+/* ==========================================================
+   calendar.css — FullCalendar theming
+   ========================================================== */
+
+.calendar-shell {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+}
+
+.fc {
+  --fc-border-color: var(--divider);
+  --fc-page-bg-color: transparent;
+  --fc-neutral-bg-color: var(--bg-secondary);
+  --fc-today-bg-color: rgba(212, 175, 55, 0.12);
+  color: var(--text-secondary);
+  font-family: "Poppins", sans-serif;
+}
+
+.fc .fc-toolbar-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.fc .fc-button {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  text-transform: capitalize;
+  font-size: 0.82rem;
+  padding: 6px 12px;
+  box-shadow: none;
+}
+
+.fc .fc-button:hover,
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background: rgba(212, 175, 55, 0.16);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.fc .fc-col-header-cell-cushion,
+.fc .fc-daygrid-day-number,
+.fc .fc-list-day-text,
+.fc .fc-list-day-side-text {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th,
+.fc-theme-standard .fc-scrollgrid {
+  border-color: var(--divider);
+}
+
+.fc-event {
+  border: 0;
+  border-radius: 7px;
+  padding: 2px 6px;
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+
+.fc .fc-list-event:hover td {
+  background: var(--card-hover);
+}
+
+.calendar-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 16px;
+}
+
+.calendar-legend span::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  margin-right: 7px;
+}
+
+.calendar-legend .type-study::before {
+  background: #d4af37;
+}
+
+.calendar-legend .type-habit::before {
+  background: #3b82f6;
+}
+
+.calendar-legend .type-reminder::before {
+  background: #a8a8a8;
+}
+
+.calendar-legend .type-done::before {
+  background: #22c55e;
+}

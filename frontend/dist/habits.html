@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Habits — Habit</title>
+    <meta name="description" content="Create, edit, filter and complete your daily habits with streak tracking and reminders." />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" crossorigin href="/assets/responsive-F3WVIKQX.css">
+    <link rel="stylesheet" crossorigin href="/assets/dashboard-D-fEbhqD.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="app-sidebar" id="appSidebar" aria-label="Main navigation"></aside>
+      <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+      <div class="app-main">
+        <div class="mobile-bar">
+          <button class="btn btn-outline-gold btn-sm" type="button" id="sidebarTrigger" aria-label="Open menu">
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+          </button>
+          <strong class="font-heading">My Habits</strong>
+          <img src="/assets/logo-CWcV2Swj.png" alt="Habit Logo" class="brand-logo-img" style="width: 36px; height: 36px; object-fit: contain;" />
+        </div>
+
+        <div class="page-wrap">
+          <header class="welcome-panel fade-up">
+            <div>
+              <h1>My Habits</h1>
+              <p class="welcome-meta" id="habitSummary"></p>
+              <p class="welcome-quote mb-0">Manage the routines that support your study plan.</p>
+            </div>
+            <button class="btn btn-gold" type="button" id="addHabitButton">
+              <i class="fa-solid fa-plus me-1" aria-hidden="true"></i>Add Habit
+            </button>
+          </header>
+
+          <section class="card-panel section-gap">
+            <div class="row g-3">
+              <div class="col-12 col-lg-4">
+                <label class="form-label" for="habitSearch">Search</label>
+                <input class="form-control" type="search" id="habitSearch" placeholder="Search habits" />
+              </div>
+              <div class="col-6 col-lg-2">
+                <label class="form-label" for="filterCategory">Category</label>
+                <select class="form-select" id="filterCategory"><option value="all">All</option></select>
+              </div>
+              <div class="col-6 col-lg-2">
+                <label class="form-label" for="filterStatus">Status</label>
+                <select class="form-select" id="filterStatus">
+                  <option value="all">All</option>
+                  <option value="completed">Completed</option>
+                  <option value="pending">Pending</option>
+                </select>
+              </div>
+              <div class="col-6 col-lg-2">
+                <label class="form-label" for="filterPriority">Priority</label>
+                <select class="form-select" id="filterPriority">
+                  <option value="all">All</option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
+              <div class="col-6 col-lg-2">
+                <label class="form-label" for="sortHabits">Sort by</label>
+                <select class="form-select" id="sortHabits">
+                  <option value="name">Name</option>
+                  <option value="streak">Streak</option>
+                  <option value="priority">Priority</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section class="row g-4" id="habitGrid"></section>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="habitModal" tabindex="-1" aria-labelledby="habitModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <form id="habitForm" novalidate>
+            <div class="modal-header">
+              <h2 class="modal-title section-title" id="habitModalTitle">Add Habit</h2>
+              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="habitId" />
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="habitName">Habit name</label>
+                  <input class="form-control" type="text" id="habitName" placeholder="Morning Revision" />
+                  <p class="field-error" id="habitNameError" role="alert">Enter at least 3 characters.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="habitCategory">Category</label>
+                  <select class="form-select" id="habitCategory"></select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="habitDescription">Description</label>
+                  <textarea class="form-control" id="habitDescription" rows="2" placeholder="What exactly will you do?"></textarea>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="habitFrequency">Frequency</label>
+                  <select class="form-select" id="habitFrequency">
+                    <option>Daily</option>
+                    <option>Specific Days</option>
+                    <option>Weekly</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="habitPriority">Priority</label>
+                  <select class="form-select" id="habitPriority">
+                    <option>High</option>
+                    <option selected>Medium</option>
+                    <option>Low</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label class="form-label" for="habitReminder">Reminder time</label>
+                  <input class="form-control" type="time" id="habitReminder" />
+                  <p class="field-error" id="habitReminderError" role="alert">Choose a reminder time.</p>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label class="form-label" for="habitStartDate">Start date</label>
+                  <input class="form-control" type="date" id="habitStartDate" />
+                </div>
+                <div class="col-12 col-md-4">
+                  <label class="form-label" for="habitGoal">Target / goal</label>
+                  <input class="form-control" type="text" id="habitGoal" placeholder="e.g. 30 days" />
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-outline-gold" type="button" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-gold" type="submit">Save Habit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="deleteHabitModal" tabindex="-1" aria-labelledby="deleteHabitTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title section-title" id="deleteHabitTitle">Delete habit</h2>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Delete <strong id="deleteHabitName"></strong>? This cannot be undone in demo mode.</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-gold" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-gold" type="button" id="confirmDeleteHabit">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/api/api.js"></script>
+    <script src="js/api/authApi.js"></script>
+    <script src="js/api/habitApi.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/habit.js"></script>
+  </body>
+</html>

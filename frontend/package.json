@@ -1,0 +1,18 @@
+{
+  "name": "habit-tracker-frontend",
+  "version": "1.0.0",
+  "description": "Student Habit Tracker & Study Planner Frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "serve": "serve . -p 3000",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4",
+    "vite": "^5.4.14"
+  }
+}
