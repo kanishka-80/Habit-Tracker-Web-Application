@@ -20,6 +20,7 @@ app.use(
     origin: function (origin, callback) {
       const allowedOrigins = [
         config.clientUrl,
+        "https://habit-tracker-web-application-beryl.vercel.app",
         "http://localhost:5500",
         "http://127.0.0.1:5500",
         "http://localhost:3000",
@@ -27,7 +28,7 @@ app.use(
         "http://localhost:5000",
         "http://127.0.0.1:5000",
       ].filter(Boolean);
-      if (!origin || allowedOrigins.includes(origin) || config.env === "development") {
+      if (!origin || allowedOrigins.includes(origin) || (origin && origin.endsWith(".vercel.app")) || config.env === "development") {
         callback(null, true);
       } else {
         callback(null, true);
@@ -48,6 +49,15 @@ if (config.env === "development") {
 app.use((req, res, next) => {
   console.log("➡️", req.method, req.originalUrl);
   next();
+});
+
+// ---------- Health Check & Root Route (Render support) ----------
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ success: true, message: "Habit Tracker Backend is running healthy!", timestamp: new Date().toISOString() });
+});
+
+app.get("/", (req, res) => {
+  res.status(200).json({ success: true, message: "Habit Tracker REST API is running. Access endpoints via /api/..." });
 });
 
 // ---------- API Routes ----------
