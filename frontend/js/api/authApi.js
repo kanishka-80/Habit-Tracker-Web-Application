@@ -5,7 +5,7 @@
  * ==========================================================
  */
 
-const AuthAPI = {
+const NodeAuthAPI = {
 
     /**
      * Register User
@@ -113,4 +113,20 @@ const AuthAPI = {
 
 };
 
-window.AuthAPI = AuthAPI;
+window.NodeAuthAPI = NodeAuthAPI;
+if (!window.AuthAPI) {
+    window.AuthAPI = NodeAuthAPI;
+}
+
+// Transparent Proxy: dynamically delegates calls to the active Auth provider (Supabase / Google Sheets / Node)
+const AuthAPI = new Proxy(NodeAuthAPI, {
+    get(target, prop) {
+        const active = (window.AuthAPI && window.AuthAPI !== AuthAPI)
+            ? window.AuthAPI
+            : (window.SupabaseAuthAPI || NodeAuthAPI);
+        if (typeof active[prop] === 'function') {
+            return active[prop].bind(active);
+        }
+        return active[prop];
+    }
+});
