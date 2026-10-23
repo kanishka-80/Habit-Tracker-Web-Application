@@ -14,16 +14,10 @@
 /* ─── Configuration ─────────────────────────────────────── */
 
 const SPREADSHEET_ID =
-  (typeof import !== "undefined" &&
-    typeof import.meta !== "undefined" &&
-    import.meta?.env?.VITE_SHEETS_SPREADSHEET_ID) ||
   window.VITE_SHEETS_SPREADSHEET_ID ||
   "1YwbwDg8z_1ZPl2Dg7ZCeavVzXq88Qms9yy-B4dORvHg";
 
 const APPS_SCRIPT_URL =
-  (typeof import !== "undefined" &&
-    typeof import.meta !== "undefined" &&
-    import.meta?.env?.VITE_SHEETS_SCRIPT_URL) ||
   window.VITE_SHEETS_SCRIPT_URL ||
   "https://script.google.com/macros/s/AKfycbxNanMpd0a96Dr_wNOt8va2udk_N2UOM53GmNqjXlATLj3R10DFcimRkr1a6jPLAeeM3g/exec";
 
@@ -361,6 +355,7 @@ function formatSheetDate(val) {
  * ========================================================== */
 const SheetsHabitAPI = {
   async getHabits() {
+    const localHabits = typeof HabitStore !== "undefined" ? HabitStore.loadHabits() : [];
     try {
       const rows = await readSheet(SHEET_NAMES.habits);
       if (rows && rows.length > 0) {
@@ -377,15 +372,25 @@ const SheetsHabitAPI = {
           longestStreak: Number(h.longestStreak) || 0,
           target: Number(h.target) || 1,
         }));
-        return { success: true, data: mapped };
+
+        // Merge: ensure locally created habits not yet present in sheets are preserved
+        const merged = [...mapped];
+        localHabits.forEach((lh) => {
+          const lId = lh.id || lh._id;
+          if (!merged.some((m) => (m.id || m._id) === lId)) {
+            merged.push(lh);
+          }
+        });
+
+        if (typeof HabitStore !== "undefined") {
+          HabitStore.saveHabits(merged);
+        }
+        return { success: true, data: merged };
       }
-      // If sheet has no rows yet, check local storage
-      const fallback = typeof HabitStore !== "undefined" ? HabitStore.loadHabits() : [];
-      return { success: true, data: fallback };
+      return { success: true, data: localHabits };
     } catch (err) {
       console.warn("[GoogleSheets] Failed to read habits:", err);
-      const fallback = typeof HabitStore !== "undefined" ? HabitStore.loadHabits() : [];
-      return { success: true, data: fallback };
+      return { success: true, data: localHabits };
     }
   },
 
@@ -417,18 +422,25 @@ const SheetsHabitAPI = {
       ...habitData,
     };
 
-    const res = await appendRow(SHEET_NAMES.habits, newHabit);
-    // Mirror to Sheet1 so whichever tab the user has open in Google Sheets, data appears immediately
-    try {
-      const row = objectToRow(newHabit, SHEET_HEADERS.habits);
-      sheetsRequest("append", "Sheet1", { row }).catch(() => {});
-    } catch (e) {
-      // ignore
-    }
+    // 1. Instantly save to HabitStore so user sees it right away
     if (typeof HabitStore !== "undefined") {
       HabitStore.saveHabit(newHabit);
     }
-    return res.success ? { success: true, data: newHabit } : { success: true, data: newHabit, warning: res.message };
+
+    // 2. Sync in background to Google Sheets
+    try {
+      const res = await appendRow(SHEET_NAMES.habits, newHabit);
+      try {
+        const row = objectToRow(newHabit, SHEET_HEADERS.habits);
+        sheetsRequest("append", "Sheet1", { row }).catch(() => {});
+      } catch (e) {
+        // ignore
+      }
+      return res.success ? { success: true, data: newHabit } : { success: true, data: newHabit, warning: res.message };
+    } catch (err) {
+      console.warn("[GoogleSheets] Append to sheet failed:", err);
+      return { success: true, data: newHabit, warning: err.message };
+    }
   },
 
   async updateHabit(id, habitData) {
@@ -443,19 +455,30 @@ const SheetsHabitAPI = {
       name: title,
     };
 
-    const res = await updateRow(SHEET_NAMES.habits, id, updated);
     if (typeof HabitStore !== "undefined") {
       HabitStore.saveHabit(updated);
     }
-    return res.success ? { success: true, data: updated } : { success: true, data: updated, warning: res.message };
+
+    try {
+      const res = await updateRow(SHEET_NAMES.habits, id, updated);
+      return res.success ? { success: true, data: updated } : { success: true, data: updated, warning: res.message };
+    } catch (err) {
+      console.warn("[GoogleSheets] Update to sheet failed:", err);
+      return { success: true, data: updated, warning: err.message };
+    }
   },
 
   async deleteHabit(id) {
-    const res = await deleteRow(SHEET_NAMES.habits, id);
     if (typeof HabitStore !== "undefined") {
       HabitStore.deleteHabit(id);
     }
-    return res.success ? { success: true } : { success: true, warning: res.message };
+    try {
+      const res = await deleteRow(SHEET_NAMES.habits, id);
+      return res.success ? { success: true } : { success: true, warning: res.message };
+    } catch (err) {
+      console.warn("[GoogleSheets] Delete from sheet failed:", err);
+      return { success: true };
+    }
   },
 
   async logCompletion(id, _date, completed = true) {

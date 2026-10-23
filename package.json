@@ -9,6 +9,9 @@
     "serve": "npm --prefix frontend run serve",
     "build": "npm --prefix frontend run build",
     "preview": "npm --prefix frontend run preview",
-    "install:frontend": "npm --prefix frontend install"
+    "install:frontend": "npm --prefix frontend install",
+    "dev:backend": "npm --prefix backend run dev",
+    "start:backend": "npm --prefix backend start",
+    "install:backend": "npm --prefix backend install"
   }
 }

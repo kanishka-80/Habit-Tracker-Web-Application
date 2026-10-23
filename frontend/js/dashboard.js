@@ -478,19 +478,17 @@ async function loadDashboardData() {
     if (dashRes && dashRes.success) {
       cachedDashboardData = dashRes.data;
     }
-    if (habitsRes && habitsRes.success) {
+    if (habitsRes && habitsRes.success && Array.isArray(habitsRes.data) && habitsRes.data.length > 0) {
       cachedHabits = habitsRes.data;
-    } else if (!window.HabitAPI) {
-      cachedHabits = HabitStore.loadHabits();
     } else {
-      cachedHabits = [];
+      const localH = HabitStore.loadHabits();
+      cachedHabits = localH.length > 0 ? localH : (habitsRes?.data || []);
     }
-    if (studyRes && studyRes.success) {
+    if (studyRes && studyRes.success && Array.isArray(studyRes.data) && studyRes.data.length > 0) {
       cachedStudySessions = studyRes.data;
-    } else if (!window.StudyAPI) {
-      cachedStudySessions = HabitStore.loadStudyPlan();
     } else {
-      cachedStudySessions = [];
+      const localS = HabitStore.loadStudyPlan();
+      cachedStudySessions = localS.length > 0 ? localS : (studyRes?.data || []);
     }
 
     renderWelcome();

@@ -600,17 +600,25 @@ async function checkAuthSession() {
   }
 
   if (window.AuthAPI) {
-    const res = await AuthAPI.getMe();
-    if (res && res.success && res.data) {
-      window.currentUser = res.data;
-      renderSidebar();
-      if (authPages.includes(currentPath)) {
-        window.location.href = "dashboard.html";
+    try {
+      const res = await AuthAPI.getMe();
+      if (res && res.success && res.data) {
+        window.currentUser = res.data;
+        renderSidebar();
+        if (authPages.includes(currentPath)) {
+          window.location.href = "dashboard.html";
+          return;
+        }
+      } else if (!savedSession && protectedPages.includes(currentPath)) {
+        window.location.href = "login.html";
         return;
       }
-    } else if (!savedSession && protectedPages.includes(currentPath)) {
-      window.location.href = "login.html";
-      return;
+    } catch (e) {
+      console.warn("Auth check error, falling back:", e);
+      if (!savedSession && protectedPages.includes(currentPath)) {
+        window.location.href = "login.html";
+        return;
+      }
     }
   }
   document.dispatchEvent(new CustomEvent("app:ready"));

@@ -205,7 +205,11 @@ function initJournalEvents() {
       }
 
       entryToDelete = null;
-      bootstrap.Modal.getInstance(document.getElementById("deleteEntryModal")).hide();
+      const delEl = document.getElementById("deleteEntryModal");
+      if (delEl) {
+        const modal = bootstrap.Modal.getInstance(delEl) || bootstrap.Modal.getOrCreateInstance(delEl);
+        if (modal) modal.hide();
+      }
       showToast("Entry deleted.", "danger");
     });
   }

@@ -7,17 +7,11 @@
  */
 
 const SUPABASE_URL =
-  (typeof import !== "undefined" &&
-    typeof import.meta !== "undefined" &&
-    (import.meta?.env?.VITE_SUPABASE_URL || import.meta?.env?.NEXT_PUBLIC_SUPABASE_URL)) ||
   window.NEXT_PUBLIC_SUPABASE_URL ||
   window.VITE_SUPABASE_URL ||
   "https://fkvqcnqpcppamghcqtzl.supabase.co";
 
 const SUPABASE_ANON_KEY =
-  (typeof import !== "undefined" &&
-    typeof import.meta !== "undefined" &&
-    (import.meta?.env?.VITE_SUPABASE_ANON_KEY || import.meta?.env?.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)) ||
   window.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
   window.VITE_SUPABASE_ANON_KEY ||
   "sb_publishable_7_cqRKPVS1tBgx5Mdrq6Yg_JHtXZ0g5";

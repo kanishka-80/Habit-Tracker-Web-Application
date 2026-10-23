@@ -110,10 +110,14 @@ function renderHabits() {
 
 function openHabitModal(habit) {
   const form = document.getElementById("habitForm");
+  if (!form) return;
   form.reset();
   const habitId = habit ? (habit._id || habit.id) : "";
-  document.getElementById("habitId").value = habitId;
-  document.getElementById("habitModalTitle").textContent = habit ? "Edit Habit" : "Add Habit";
+  const idEl = document.getElementById("habitId");
+  if (idEl) idEl.value = habitId;
+  const titleEl = document.getElementById("habitModalTitle");
+  if (titleEl) titleEl.textContent = habit ? "Edit Habit" : "Add Habit";
+
   if (habit) {
     document.getElementById("habitName").value = habit.title || habit.name || "";
     document.getElementById("habitDescription").value = habit.description || "";
@@ -130,7 +134,12 @@ function openHabitModal(habit) {
     document.getElementById("habitReminder").value = "07:00";
   }
   form.querySelectorAll(".field-error").forEach((node) => node.classList.remove("show"));
-  new bootstrap.Modal(document.getElementById("habitModal")).show();
+  
+  const modalEl = document.getElementById("habitModal");
+  if (modalEl) {
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+    modal.show();
+  }
 }
 
 function initHabitForm() {
@@ -144,59 +153,97 @@ function initHabitForm() {
     let valid = true;
 
     const nameError = document.getElementById("habitNameError");
-    if (name.value.trim().length < 3) {
-      nameError.classList.add("show");
-      name.classList.add("invalid");
+    if (!name || name.value.trim().length < 3) {
+      if (nameError) nameError.classList.add("show");
+      if (name) name.classList.add("invalid");
       valid = false;
     } else {
-      nameError.classList.remove("show");
-      name.classList.remove("invalid");
+      if (nameError) nameError.classList.remove("show");
+      if (name) name.classList.remove("invalid");
     }
 
     const reminderError = document.getElementById("habitReminderError");
-    if (!reminder.value) {
-      reminderError.classList.add("show");
+    if (!reminder || !reminder.value) {
+      if (reminderError) reminderError.classList.add("show");
       valid = false;
-    } else reminderError.classList.remove("show");
+    } else {
+      if (reminderError) reminderError.classList.remove("show");
+    }
 
     if (!valid) return;
 
+    const submitBtn = form.querySelector("button[type='submit']");
+    const originalBtnText = submitBtn ? submitBtn.innerHTML : "Save Habit";
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>Saving...`;
+    }
+
     const id = document.getElementById("habitId").value;
+    const catEl = document.getElementById("habitCategory");
+    const freqEl = document.getElementById("habitFrequency");
+    const prioEl = document.getElementById("habitPriority");
+    const descEl = document.getElementById("habitDescription");
+    const startEl = document.getElementById("habitStartDate");
+    const goalEl = document.getElementById("habitGoal");
+
     const habitData = {
       title: name.value.trim(),
-      description: document.getElementById("habitDescription").value.trim() || "No description added.",
-      category: document.getElementById("habitCategory").value.toLowerCase(),
-      frequency: document.getElementById("habitFrequency").value.toLowerCase(),
-      priority: document.getElementById("habitPriority").value.toLowerCase(),
-      reminderTime: reminder.value,
-      target: parseInt(document.getElementById("habitGoal").value.trim(), 10) || 1,
+      name: name.value.trim(),
+      description: descEl ? descEl.value.trim() : "No description added.",
+      category: catEl ? catEl.value.toLowerCase() : "study",
+      frequency: freqEl ? freqEl.value.toLowerCase() : "daily",
+      priority: prioEl ? prioEl.value.toLowerCase() : "medium",
+      reminderTime: reminder.value || "07:00",
+      startDate: (startEl && startEl.value) ? startEl.value : isoDate(0),
+      target: (goalEl && parseInt(goalEl.value.trim(), 10)) || 1,
     };
 
-    if (window.HabitAPI) {
-      if (id) {
-        await HabitAPI.updateHabit(id, habitData);
+    try {
+      if (window.HabitAPI) {
+        if (id) {
+          await HabitAPI.updateHabit(id, habitData);
+        } else {
+          await HabitAPI.createHabit(habitData);
+        }
       } else {
-        await HabitAPI.createHabit(habitData);
+        const existing = HabitStore.loadHabits().find((h) => (h.id || h._id) === id);
+        const habit = {
+          id: id || createId("habit"),
+          ...habitData,
+          currentStreak: existing ? existing.currentStreak : 0,
+          longestStreak: existing ? existing.longestStreak : 0,
+          completedToday: existing ? existing.completedToday : false,
+        };
+        HabitStore.saveHabit(habit);
       }
-      await loadLiveHabits();
-    } else {
-      const existing = HabitStore.loadHabits().find((h) => h.id === id);
+    } catch (apiErr) {
+      console.warn("API save error, persisting locally to HabitStore:", apiErr);
+      const existing = HabitStore.loadHabits().find((h) => (h.id || h._id) === id);
       const habit = {
         id: id || createId("habit"),
-        name: name.value.trim(),
         ...habitData,
-        startDate: document.getElementById("habitStartDate").value || isoDate(0),
         currentStreak: existing ? existing.currentStreak : 0,
         longestStreak: existing ? existing.longestStreak : 0,
         completedToday: existing ? existing.completedToday : false,
       };
       HabitStore.saveHabit(habit);
-      liveHabits = HabitStore.loadHabits();
-      renderHabits();
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+      }
     }
 
-    bootstrap.Modal.getInstance(document.getElementById("habitModal")).hide();
+    await loadLiveHabits();
+
+    const modalEl = document.getElementById("habitModal");
+    if (modalEl) {
+      const modal = bootstrap.Modal.getInstance(modalEl) || bootstrap.Modal.getOrCreateInstance(modalEl);
+      if (modal) modal.hide();
+    }
     showToast(id ? "Habit updated." : "Habit created.", "success");
+    form.reset();
   });
 }
 
@@ -243,8 +290,10 @@ function initHabitEvents() {
 
       if (event.target.closest(".habit-delete")) {
         habitToDelete = habit;
-        document.getElementById("deleteHabitName").textContent = habit.title || habit.name;
-        new bootstrap.Modal(document.getElementById("deleteHabitModal")).show();
+        const delNameEl = document.getElementById("deleteHabitName");
+        if (delNameEl) delNameEl.textContent = habit.title || habit.name;
+        const delModalEl = document.getElementById("deleteHabitModal");
+        if (delModalEl) bootstrap.Modal.getOrCreateInstance(delModalEl).show();
       }
     });
   }
@@ -265,7 +314,11 @@ function initHabitEvents() {
       }
 
       habitToDelete = null;
-      bootstrap.Modal.getInstance(document.getElementById("deleteHabitModal")).hide();
+      const delModalEl = document.getElementById("deleteHabitModal");
+      if (delModalEl) {
+        const modal = bootstrap.Modal.getInstance(delModalEl) || bootstrap.Modal.getOrCreateInstance(delModalEl);
+        if (modal) modal.hide();
+      }
       showToast("Habit deleted.", "danger");
     });
   }
@@ -288,10 +341,16 @@ function fillCategoryOptions() {
 
 async function loadLiveHabits() {
   if (window.HabitAPI) {
-    const res = await HabitAPI.getHabits();
-    if (res.success) {
-      liveHabits = res.data;
-    } else {
+    try {
+      const res = await HabitAPI.getHabits();
+      if (res && res.success && Array.isArray(res.data) && res.data.length > 0) {
+        liveHabits = res.data;
+      } else {
+        const local = HabitStore.loadHabits();
+        liveHabits = local.length > 0 ? local : (res?.data || []);
+      }
+    } catch (e) {
+      console.warn("Failed to load habits from API, fallback to local:", e);
       liveHabits = HabitStore.loadHabits();
     }
   } else {
@@ -300,10 +359,19 @@ async function loadLiveHabits() {
   renderHabits();
 }
 
-document.addEventListener("app:ready", () => {
+function initHabitsPage() {
   if (!document.getElementById("habitGrid")) return;
   fillCategoryOptions();
   initHabitForm();
   initHabitEvents();
   loadLiveHabits();
-});
+}
+
+document.addEventListener("app:ready", initHabitsPage);
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  setTimeout(() => {
+    if (document.getElementById("habitGrid") && liveHabits.length === 0) {
+      initHabitsPage();
+    }
+  }, 300);
+}
