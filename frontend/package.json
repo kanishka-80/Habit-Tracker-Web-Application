@@ -8,7 +8,7 @@
     "dev": "vite",
     "start": "vite",
     "serve": "serve . -p 3000",
-    "build": "vite build",
+    "build": "vite build && node copy-assets.js",
     "preview": "vite preview"
   },
   "devDependencies": {
